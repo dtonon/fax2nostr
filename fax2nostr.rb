@@ -86,7 +86,7 @@ unread_emails.each do |email|
         response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |http|
           http.request(request)
         end
-        this_fax = response.body
+        this_fax = response.body.gsub("http", "https") + ".png"
         puts "Found => #{this_fax}"
       end
     rescue => e
