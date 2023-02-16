@@ -1,4 +1,3 @@
-# fax_number = "+39000010101010"
 # host = "mail.yourprovider.com"
 # username = "faxinbox@domain.com"
 # password = "mailbox_password"
@@ -113,7 +112,7 @@ n = Nostr.new(private_key: nostr_prvkey)
 faxes.each do |fax|
 
   content = fax
-  content << "\n\nPowered by fax2nostr\nSend a fax to #{fax_number} to publish it on Nostr"
+  content << "\n\nThis note has been posted on Nostr by fax :)"
   event = n.build_note_event(content)
   puts event.inspect
 
