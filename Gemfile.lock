@@ -15,6 +15,7 @@ GEM
       net-imap
       net-pop
       net-smtp
+    mini_magick (4.12.0)
     mini_mime (1.1.2)
     net-imap (0.3.4)
       date
@@ -32,9 +33,6 @@ GEM
       json (~> 2.6.2)
       unicode-emoji (~> 3.3.1)
       websocket-client-simple (~> 0.6.0)
-    pkg-config (1.5.1)
-    rmagick (5.1.0)
-      pkg-config (~> 1.4)
     thor (1.2.1)
     timeout (0.3.1)
     unicode-emoji (3.3.1)
@@ -50,9 +48,9 @@ PLATFORMS
 
 DEPENDENCIES
   mail
+  mini_magick
   net-imap
   nostr_ruby
-  rmagick
 
 BUNDLED WITH
    2.3.14

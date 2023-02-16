@@ -7,7 +7,7 @@
 # nostr_relays = ["wss://relay.nostr.ro", "wss://relay.wellorder.net", "wss://relay.snort.social", "wss://relay.damus.io"]
 
 require 'mail'
-require 'rmagick'
+require 'mini_magick'
 require 'uri'
 require 'net/http'
 require 'securerandom'
@@ -34,14 +34,21 @@ unread_emails.each do |email|
   if email.multipart?
     attachment = email.attachments.first
     next unless attachment.content_type.start_with?("application/pdf") || attachment.content_type.start_with?("application/octet-stream")
-    pdf_in = "./file.pdf"
+    pdf_in = "./fax.pdf"
     image_out = "./output.png"
     File.open(pdf_in, "wb") { |f| f.write(attachment.body.decoded) }
     
-    pdf = Magick::Image.read(pdf_in)
-    pdf[0].border!(0, 0, 'white')
-    pdf[0].alpha Magick::DeactivateAlphaChannel
-    pdf[0].write(image_out)
+    pdf = MiniMagick::Image.open pdf_in
+    MiniMagick::Tool::Convert.new do |convert|
+      convert.background "white"
+      convert.flatten
+      convert.density 400
+      convert.quality 100
+      convert.resize  "50%"
+      convert.modulate "98,100,100" # Reducing the brightness value a bit to show better on white bg
+      convert << pdf.pages.first.path
+      convert << "png8:#{image_out}"
+    end
     
     this_fax = nil
 
