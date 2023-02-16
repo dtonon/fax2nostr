@@ -139,8 +139,10 @@ faxes.each do |fax|
         sleep timer_step
         timer += timer_step
       end
+      ws.close
     rescue => e
       puts e.inspect
+      ws.close
     end
 
   end
